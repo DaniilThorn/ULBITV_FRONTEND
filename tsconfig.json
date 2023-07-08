@@ -4,13 +4,14 @@
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
+    "baseUrl": ".",
     "moduleResolution": "node",
     // import вместо require
     "esModuleInterop": true,
     //убираем as * из импортов
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "ts-node": {
     "compilerOptions": {
