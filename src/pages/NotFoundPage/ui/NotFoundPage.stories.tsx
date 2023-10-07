@@ -6,12 +6,12 @@ import { ThemeDecorator } from "shared/config/storybook/themeDecorator/themeDeco
 import { Theme } from "app/providers/ThemeProvider";
 
 export default {
-    title: "pages/NotFoundPage",
-    component: NotFoundPage,
+  title: "pages/NotFoundPage",
+  component: NotFoundPage,
 
-    argTypes: {
-        backgroundColor: { control: "color" },
-    },
+  argTypes: {
+    backgroundColor: { control: "color" },
+  },
 } as ComponentMeta<typeof NotFoundPage>;
 
 
