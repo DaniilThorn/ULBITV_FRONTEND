@@ -12,20 +12,21 @@ import cls from './LoginForm.module.scss'
 
 import { DynamicModuleLoader, ReducersList }
   from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader'
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch'
 
 export interface LoginFormProps {
   className?: string
+onSuccess:()=>void
 }
 
 const initialReducers:ReducersList={
   loginForm: loginReducer
 }
 
-const LoginForm = memo(({ className, }: LoginFormProps) => {
+const LoginForm = memo(({ className, onSuccess}: LoginFormProps) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const {username, password, isLoading, error} = useSelector(getLoginState)
-
 
   const onChangeUserName = useCallback((value:string)=>{
     dispatch(loginActions.setUserName(value))
@@ -35,23 +36,27 @@ const LoginForm = memo(({ className, }: LoginFormProps) => {
     dispatch(loginActions.setPassword(value))
   },[dispatch])
 
-  const onLoginClick = useCallback(() => {
-    dispatch(loginByUserName({username,password}))
-  },[username, password, dispatch])
+  const onLoginClick = useCallback(async () => {
+    const res = dispatch(loginByUserName({username,password}))
+    if((await res).meta.requestStatus === "fulfilled"){
+      onSuccess()
+    }
+
+  },[username, password, dispatch, onSuccess])
 
   return (
     <DynamicModuleLoader  reducers={initialReducers}>
       <div className={classNames(cls.loginform, {}, [className])}>
         <Text title={t('Форма авторизации')}/>
         {error && <Text text={t("Вы ввели неправильный логин или пароль")} theme={TextTheme.ERROR}/>}
-        <Input type="text" 
+        <Input type="text"
           className={cls.input}
           placeholder={t("Введите имя")}
           autoFocus
           onChange={onChangeUserName}
           value={username}
         />
-        <Input type="text" 
+        <Input type="text"
           className={cls.input}
           placeholder={t("Введите пароль")}
           onChange={onChangePassword}

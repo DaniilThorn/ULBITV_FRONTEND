@@ -8,7 +8,6 @@ import { Navbar } from "widgets/Navbar";
 import { Sidebar } from "widgets/Sidebar";
 import { AppRouter } from "./providers/router";
 
-
 export const App = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch()
